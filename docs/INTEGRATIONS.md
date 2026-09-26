@@ -7,7 +7,7 @@ C-Link exposes an OpenAI-compatible Chat Completions API. Configure clients with
 Start your llama.cpp-compatible model server first. If it listens on port `9931`, start C-Link on `9940` in another PowerShell window:
 
 ```powershell
-Set-Location .\production
+Set-Location .
 $env:C_LINK_LLAMACPP_URL = "http://127.0.0.1:9931"
 & .\.venv\Scripts\c-link.exe doctor --require-model
 & .\.venv\Scripts\c-link.exe run --host 127.0.0.1 --port 9940
