@@ -187,12 +187,11 @@ c-link/
 ├── README.ja.md              # 日本語
 ├── LICENSE                   # MIT
 ├── assets/                   # README バナー、構成図、動作確認画像
-└── ./
-    ├── pyproject.toml        # Python パッケージ設定
-    ├── src/c_link/           # API、コンテキスト、保存、プロバイダー、CLI
-    ├── tests/                # 回帰テスト
-    ├── docs/INTEGRATIONS.md  # クライアント設定と API 詳細
-    └── scripts/start.ps1     # Windows 起動補助
+├── pyproject.toml            # Python パッケージ設定
+├── src/c_link/               # API、コンテキスト、保存、プロバイダー、CLI
+├── tests/                    # 回帰テスト
+├── docs/INTEGRATIONS.md      # クライアント設定と API 詳細
+└── scripts/start.ps1         # Windows 起動補助
 ```
 
 ローカルデータ、モデルファイル、非公開の作業コンテキスト、生成レポート、ベンチマーク用コードは GitHub のソース配布物に含めません。
