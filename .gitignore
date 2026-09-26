@@ -25,3 +25,5 @@ dist/
 htmlcov/
 .coverage
 .ruff_cache/
+
+src/c_link.egg-info/
