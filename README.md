@@ -4,6 +4,8 @@ C-Link 0.5.0 is an OpenAI-compatible chat and durable-memory gateway. It provide
 
 ## Quick start on Windows
 
+Run from the repository root:
+
 Start an OpenAI-compatible model server, then run in PowerShell:
 
 ```powershell
