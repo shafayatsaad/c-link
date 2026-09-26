@@ -53,7 +53,7 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml ps
 docker compose --env-file deploy/.env -f deploy/compose.yaml logs -f c-link caddy
 ```
 
-When DNS and firewall settings are correct, check `https://YOUR_DOMAIN/health` and `https://YOUR_DOMAIN/health/provider`. The health endpoint confirms C-Link and its database are ready; the provider endpoint checks the model server. Interactive API docs are available at `https://YOUR_DOMAIN/docs`; only `/v1/*`, `/health`, and `/health/provider` are routed by the supplied Caddy configuration, so `/docs` is not routed in the default public configuration.
+When DNS and firewall settings are correct, check `https://YOUR_DOMAIN/health` and `https://YOUR_DOMAIN/health/provider`. The health endpoint confirms C-Link and its database are ready; the provider endpoint checks the model server. Interactive API docs are available locally at `/docs`; the supplied public Caddy configuration does not route the docs or schema endpoints.
 
 ## Provision users and keys
 
