@@ -1,6 +1,6 @@
-# Self-hosted deployment
+# Optional remote deployment
 
-This guide deploys one C-Link instance for multiple operator-provisioned users on a single Linux Docker host. Docker Compose starts C-Link, SQLite storage, and Caddy as a public TLS reverse proxy. It is a useful small deployment baseline; it does not provide high availability or horizontal scaling.
+This guide is only for an operator who intentionally wants remote access to a shared C-Link instance. It is not needed for normal local installation: the default C-Link setup listens on loopback and has no account or sign-up flow. The template deploys one instance for operator-provisioned users on a single Linux Docker host. Docker Compose starts C-Link, SQLite storage, and Caddy as a TLS reverse proxy. It does not provide high availability or horizontal scaling.
 
 ## Requirements
 
