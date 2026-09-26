@@ -1,6 +1,6 @@
 # C-Link production package
 
-C-Link 0.5.0 is an OpenAI-compatible chat and durable-memory gateway. It provides local single-user mode and an operator-provisioned, API-key authenticated tenant mode for one self-hosted instance.
+C-Link 0.5.0 is an open-source-intended, local-first OpenAI-compatible chat and durable-memory gateway. The normal installation runs on loopback for one person's apps and needs no C-Link account or sign-up. Optional API-key tenants are available when a machine operator intentionally shares one instance.
 
 ## Quick start on Windows
 
@@ -19,15 +19,15 @@ $env:C_LINK_LLAMACPP_URL = "http://127.0.0.1:9931"
 
 Keep the API bound to loopback for local use. If port 9940 is occupied, choose a free port and use it consistently in the app's API base URL. Do not terminate the model server to resolve a C-Link port conflict.
 
-## Production deployment
+## Optional remote deployment
 
-The supported internet-facing template is a single Linux Docker host with Docker Compose, C-Link, SQLite, and Caddy for TLS. It requires an operator-managed domain, firewall access on ports 80/443, and a trusted model endpoint. See [the deployment guide](docs/DEPLOYMENT.md) before using it with real users.
+Remote hosting is not required to install or use C-Link. For an operator who intentionally wants a shared remote endpoint, the repository includes a single Linux Docker host template with Docker Compose, SQLite, and Caddy TLS. It requires an operator-managed domain, firewall access on ports 80/443, and a trusted model endpoint. See [the optional deployment guide](docs/DEPLOYMENT.md).
 
 Provision tenants on the host with `c-link tenant create "Name"`. It prints the initial high-entropy API key once; only the key hash is persisted. `/v1/*` requests require the key. Each tenant has isolated sessions and context. There is no public signup, account portal, or self-service key management.
 
 ## Benchmarks
 
-See the [project README](../README.md#benchmark-evidence) for a concise results table and caveats. Raw benchmark reports and scripts are under `benchmark-results/` and `scripts/`. These are one-host smoke measurements, not an SLA or capacity claim.
+See the [project README](../README.md#benchmark-snapshot) for the visual results summary, table, and caveats. Raw benchmark reports and scripts are under `benchmark-results/` and `scripts/`. These are one-host smoke measurements, not an SLA or capacity claim.
 
 ## Development and verification
 
