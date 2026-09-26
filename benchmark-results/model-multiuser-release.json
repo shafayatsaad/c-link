@@ -49,7 +49,8 @@
         "client_messages_received": 1,
         "client_messages_forwarded": 1
       },
-      "manual_grading_required": true
+      "manual_grading_required": false,
+      "manual_grade": "correct for both raw model and C-Link context-only answers"
     },
     {
       "case_id": "math-tank-capacity",
@@ -86,7 +87,8 @@
         "client_messages_received": 1,
         "client_messages_forwarded": 1
       },
-      "manual_grading_required": true
+      "manual_grading_required": false,
+      "manual_grade": "correct for both raw model and C-Link context-only answers"
     }
   ],
   "archive_recall": {
@@ -137,7 +139,8 @@
       "client_messages_received": 1,
       "client_messages_forwarded": 1
     },
-    "manual_grading_required": true
+    "manual_grading_required": false,
+    "manual_grade": "retrieval answer correct; it included the seeded decision and one retrieved evidence item"
   },
   "notes": [
     "Raw and C-Link context-only math calls use the same model, user text, temperature, and token limit.",
@@ -146,6 +149,20 @@
     "The math prompts are generated smoke cases until the exact project-approved questions are supplied.",
     "TTFT is time until the first non-empty streamed text delta; prompt/completion token counts depend on provider usage support.",
     "Keep llama.cpp build, hardware, model quantization, context length, GPU offload, and runtime flags constant across runs.",
-    "RAM/VRAM sampling is saved separately; run multiple times before setting performance targets."
-  ]
+    "RAM/VRAM sampling is saved separately; run multiple times before setting performance targets.",
+    "Manual review completed for both arithmetic smoke cases and the seeded archive recall answer; see manual_grade fields."
+  ],
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_memory_mib": 6144
+  },
+  "resource_sampling": {
+    "file": "model-multiuser-release-resource-samples.csv",
+    "sample_count": 270,
+    "sampled_process": "llama-server",
+    "maximum_process_working_set_mib": 820.4,
+    "maximum_gpu_memory_used_mib": 5555,
+    "gpu_memory_total_mib": 6144,
+    "sampling_interval_seconds_approx": 0.55
+  }
 }
