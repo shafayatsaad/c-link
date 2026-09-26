@@ -1,48 +1,38 @@
 # C-Link production package
 
-C-Link 0.5.0 is an open-source-intended, local-first OpenAI-compatible chat and durable-memory gateway. The normal installation runs on loopback for one person's apps and needs no C-Link account or sign-up. Optional API-key tenants are available when a machine operator intentionally shares one instance.
+C-Link is a local-first, OpenAI-compatible chat and durable-memory gateway. It runs on your own computer, uses SQLite for local conversation storage, and does not require a C-Link account or sign-up. Chat generation requires a separately installed OpenAI-compatible model server; memory and session APIs can be used without one.
 
 ## Quick start on Windows
 
-Run from the repository root:
-
-Start an OpenAI-compatible model server, then run in PowerShell:
+Install Python 3.13 and an OpenAI-compatible local model server such as llama.cpp. Start the model server on port `9931`, then open PowerShell:
 
 ```powershell
-Set-Location .\production
+Set-Location D:\Coding\c-link\production
 py -3.13 -m venv .venv
-& .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+& .\.venv\Scripts\python.exe -m pip install --upgrade pip
+& .\.venv\Scripts\python.exe -m pip install -e .
 $env:C_LINK_LLAMACPP_URL = "http://127.0.0.1:9931"
 & .\.venv\Scripts\c-link.exe doctor --require-model
 & .\.venv\Scripts\c-link.exe run --host 127.0.0.1 --port 9940
 ```
 
-Keep the API bound to loopback for local use. If port 9940 is occupied, choose a free port and use it consistently in the app's API base URL. Do not terminate the model server to resolve a C-Link port conflict.
+Keep this terminal open while using C-Link. If port `9940` is already in use, keep the existing server or choose another free port and update the app's API base URL.
 
-## Optional remote deployment
+Check service health from another PowerShell window:
 
-Remote hosting is not required to install or use C-Link. For an operator who intentionally wants a shared remote endpoint, the repository includes a single Linux Docker host template with Docker Compose, SQLite, and Caddy TLS. It requires an operator-managed domain, firewall access on ports 80/443, and a trusted model endpoint. See [the optional deployment guide](docs/DEPLOYMENT.md).
+```powershell
+Invoke-RestMethod http://127.0.0.1:9940/health
+Invoke-RestMethod http://127.0.0.1:9940/health/provider
+Invoke-RestMethod http://127.0.0.1:9940/v1/models
+```
 
-Provision tenants on the host with `c-link tenant create "Name"`. It prints the initial high-entropy API key once; only the key hash is persisted. `/v1/*` requests require the key. Each tenant has isolated sessions and context. There is no public signup, account portal, or self-service key management.
+For API setup, supported routes, integrations, backups, and session IDs, see [the root README](../README.md) and [the integrations guide](docs/INTEGRATIONS.md).
 
-## Benchmarks
-
-See the [project README](../README.md#benchmark-snapshot) for the visual results summary, table, and caveats. Raw benchmark reports and scripts are under `benchmark-results/` and `scripts/`. These are one-host smoke measurements, not an SLA or capacity claim.
-
-## Development and verification
+## Development checks
 
 ```powershell
 & .\.venv\Scripts\python.exe -m pytest
-& .\.venv\Scripts\python.exe -m compileall -q src tests scripts
-docker compose --env-file deploy/.env.example -f deploy/compose.yaml config --quiet
+& .\.venv\Scripts\python.exe -m compileall -q src tests
 ```
 
-The Compose config command validates interpolation and syntax only. Building and running the container, acquiring a certificate, and testing the public deployment require a running Docker host, real DNS, and open firewall ports.
-
-## Documentation
-
-- [App integrations](docs/INTEGRATIONS.md)
-- [Self-hosted deployment](docs/DEPLOYMENT.md)
-- Project architecture and working context are kept outside this production package.
-
-Conversation data is stored in SQLite. Protect the database volume and backups with host-level access controls and encryption. The package does not currently provide database encryption, horizontal scaling, persistent distributed rate limiting, user registration, or application-level monitoring.
+The app binds to loopback by default. Conversation data and configuration stay in the local `production/data/` directory unless you change the configured paths. Back up that data directory using the CLI backup command before moving or replacing the database.
