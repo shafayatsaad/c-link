@@ -10,3 +10,18 @@ deploy/secrets/llamacpp_api_key
 *.db
 backups/
 .pytest_cache/
+
+# Local-only material and optional hosting files are not part of the product source.
+benchmark-results/
+benchmarks/
+scripts/benchmark_*.py
+Dockerfile
+deploy/
+docs/DEPLOYMENT.md
+
+# Build and coverage output.
+build/
+dist/
+htmlcov/
+.coverage
+.ruff_cache/
