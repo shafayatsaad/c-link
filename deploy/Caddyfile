@@ -1,0 +1,23 @@
+{$C_LINK_DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 2MB
+	}
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		-Server
+	}
+	@api path /v1/*
+	@health path /health
+	handle @api {
+		reverse_proxy c-link:8000
+	}
+	handle @health {
+		reverse_proxy c-link:8000
+	}
+	handle {
+		respond "not found" 404
+	}
+}

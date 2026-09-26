@@ -1,0 +1,96 @@
+{
+  "benchmark": "c-link-model-v1",
+  "timestamp_utc": "2026-09-26T13:30:40.896955+00:00",
+  "model": "C:\\Users\\shafa\\AppData\\Local\\hermes\\models\\Qwen2.5-Coder-7B-Instruct-Q5_K_M.gguf",
+  "max_tokens": 512,
+  "model_base_url": "http://127.0.0.1:9931",
+  "c_link_base_url": "http://127.0.0.1:9940",
+  "session_id": "model-bench-4a33e75f-59eb-4dba-8bf1-0978b5f3ebef",
+  "cases": [
+    {
+      "case_id": "math-discount-tax",
+      "question": "A jacket costs $84. It is discounted by 25%, then 8% sales tax is applied to the discounted price. What is the final price?",
+      "expected_answer": "$68.04",
+      "grading_note": "Accept 68.04; discount first, then apply tax.",
+      "raw_model": {
+        "answer": "To find the final price of the jacket after the discount and sales tax, we can follow these steps:\n\n1. Calculate the discounted price of the jacket.\n2. Apply the sales tax to the discounted price.\n3. Add the sales tax to the discounted price to get the final price.\n\nLet's break it down:\n\n1. The original price of the jacket is $84. It is discounted by 25%. So, the discounted price is \\(84 \\times (1 - 0.25) = 84 \\times 0.75 = 63\\) dollars.\n2. The sales tax is 8%. So, the sales tax on the discounted price is \\(63 \\times 0.08 = 5.04\\) dollars.\n3. The final price is the discounted price plus the sales tax, which is \\(63 + 5.04 = 68.04\\) dollars.\n\nWe can use Python to verify this calculation.\n```python\n# Original price of the jacket\noriginal_price = 84\n\n# Discount rate\ndiscount_rate = 0.25\n\n# Sales tax rate\nsales_tax_rate = 0.08\n\n# Calculate the discounted price\ndiscounted_price = original_price * (1 - discount_rate)\n\n# Calculate the sales tax on the discounted price\nsales_tax = discounted_price * sales_tax_rate\n\n# Calculate the final price\nfinal_price = discounted_price + sales_tax\n\nprint(final_price)\n```\n```output\n68.04\n```\nThe final price of the jacket after the discount and sales tax is \\(\\boxed{68.04}\\) dollars.",
+        "total_latency_ms": 6469.12,
+        "prompt_tokens": 63,
+        "completion_tokens": 348,
+        "provider_generation_tokens_per_second": 55.91936170940989,
+        "ttft_ms": null,
+        "evidence_count": 0,
+        "retrieval_performed": false
+      },
+      "c_link_active_context": {
+        "answer": "To find the final price of the jacket after the discount and sales tax, follow these steps:\n\n1. **Calculate the discount:**\n   - The jacket is discounted by 25%.\n   - Discount amount = 25% of $84 = 0.25 * $84 = $21.\n   - Discounted price = Original price - Discount amount = $84 - $21 = $63.\n\n2. **Calculate the sales tax:**\n   - Sales tax is 8% applied to the discounted price.\n   - Sales tax amount = 8% of $63 = 0.08 * $63 = $5.04.\n   - Final price = Discounted price + Sales tax amount = $63 + $5.04 = $68.04.\n\nSo, the final price of the jacket after the discount and sales tax is **$68.04**.",
+        "total_latency_ms": 3683.1,
+        "prompt_tokens": 236,
+        "completion_tokens": 199,
+        "provider_generation_tokens_per_second": 55.47080075585238,
+        "ttft_ms": null,
+        "evidence_count": 0,
+        "retrieval_performed": false
+      },
+      "manual_grading_required": true
+    },
+    {
+      "case_id": "math-tank-capacity",
+      "question": "A tank is 3/5 full. After adding 18 liters, it is 9/10 full. What is the tank's total capacity?",
+      "expected_answer": "60 liters",
+      "grading_note": "Accept 60 L or 60 liters.",
+      "raw_model": {
+        "answer": "To determine the total capacity of the tank, we can set up an equation based on the information given. Let's denote the total capacity of the tank by \\( C \\) liters.\n\n1. Initially, the tank is \\( \\frac{3}{5} \\) full. Therefore, the amount of water in the tank initially is:\n   \\[\n   \\frac{3}{5}C\n   \\]\n\n2. After adding 18 liters, the tank becomes \\( \\frac{9}{10} \\) full. Therefore, the amount of water in the tank after adding 18 liters is:\n   \\[\n   \\frac{9}{10}C\n   \\]\n\n3. The difference between the amount of water after adding 18 liters and the initial amount of water is 18 liters. This can be expressed as:\n   \\[\n   \\frac{9}{10}C - \\frac{3}{5}C = 18\n   \\]\n\n4. To solve this equation, we need to find a common denominator for the fractions \\( \\frac{9}{10} \\) and \\( \\frac{3}{5} \\). The least common denominator of 10 and 5 is 10. We can rewrite \\( \\frac{3}{5} \\) as \\( \\frac{6}{10} \\):\n   \\[\n   \\frac{9}{10}C - \\frac{6}{10}C = 18\n   \\]\n\n5. Simplify the left side of the equation:\n   \\[\n   \\frac{3}{10}C = 18\n   \\]\n\n6. To isolate \\( C \\), multiply both sides of the equation by 10:\n   \\[\n   3C = 180\n   \\]\n\n7. Then, divide both sides by 3:\n   \\[\n   C = 60\n   \\]\n\nTherefore, the total capacity of the tank is \\(\\boxed{60}\\) liters.",
+        "total_latency_ms": 7758.99,
+        "prompt_tokens": 62,
+        "completion_tokens": 428,
+        "provider_generation_tokens_per_second": 55.78647855674645,
+        "ttft_ms": null,
+        "evidence_count": 0,
+        "retrieval_performed": false
+      },
+      "c_link_active_context": {
+        "answer": "To determine the tank's total capacity, let's denote the total capacity of the tank by \\( C \\) liters.\n\n1. Initially, the tank is \\( \\frac{3}{5} \\) full. Therefore, the amount of water in the tank initially is:\n   \\[\n   \\frac{3}{5}C\n   \\]\n\n2. After adding 18 liters, the tank becomes \\( \\frac{9}{10} \\) full. Therefore, the amount of water in the tank after adding 18 liters is:\n   \\[\n   \\frac{9}{10}C\n   \\]\n\n3. The difference between the amount of water after adding 18 liters and the initial amount of water is 18 liters. This can be expressed as:\n   \\[\n   \\frac{9}{10}C - \\frac{3}{5}C = 18\n   \\]\n\n4. To solve for \\( C \\), we first need to find a common denominator for the fractions \\( \\frac{9}{10} \\) and \\( \\frac{3}{5} \\). The common denominator is 10. So, we rewrite \\( \\frac{3}{5} \\) as \\( \\frac{6}{10} \\):\n   \\[\n   \\frac{9}{10}C - \\frac{6}{10}C = 18\n   \\]\n\n5. Simplify the left side of the equation:\n   \\[\n   \\frac{3}{10}C = 18\n   \\]\n\n6. To isolate \\( C \\), multiply both sides of the equation by 10:\n   \\[\n   3C = 180\n   \\]\n\n7. Finally, divide both sides by 3:\n   \\[\n   C = 60\n   \\]\n\nSo, the tank's total capacity is \\( 60 \\) liters.",
+        "total_latency_ms": 7531.03,
+        "prompt_tokens": 235,
+        "completion_tokens": 408,
+        "provider_generation_tokens_per_second": 55.165162875143395,
+        "ttft_ms": null,
+        "evidence_count": 0,
+        "retrieval_performed": false
+      },
+      "manual_grading_required": true
+    }
+  ],
+  "archive_recall": {
+    "question": "Why did we choose SQLite for the initial archive?",
+    "expected_answer": "SQLite was chosen because it is embedded, durable, portable, and needs no separate service.",
+    "raw_model": {
+      "answer": "We chose SQLite for the initial archive because it is a lightweight, file-based database that doesn't require a separate server process. It is easy to use and can be embedded into applications, making it ideal for our needs where we required a simple and efficient database solution that could be easily integrated into our software.",
+      "total_latency_ms": 1260.66,
+      "prompt_tokens": 39,
+      "completion_tokens": 62,
+      "provider_generation_tokens_per_second": 56.05558544182198,
+      "ttft_ms": null,
+      "evidence_count": 0,
+      "retrieval_performed": false
+    },
+    "c_link_context_and_archive_retrieval": {
+      "answer": "We chose SQLite for the initial archive because it is embedded, durable, portable, and does not require a separate database service.",
+      "total_latency_ms": 1064.33,
+      "prompt_tokens": 534,
+      "completion_tokens": 26,
+      "provider_generation_tokens_per_second": 57.54147412404171,
+      "ttft_ms": null,
+      "evidence_count": 3,
+      "retrieval_performed": true
+    },
+    "manual_grading_required": true
+  },
+  "notes": [
+    "Keep model, quantization, llama.cpp build, hardware, and runtime settings identical between comparisons.",
+    "TTFT is not measured because the current adapter does not stream tokens.",
+    "Capture RAM and VRAM separately with Windows Task Manager and nvidia-smi during the run.",
+    "The included math cases are provisional examples; replace them with project-approved prompts if available."
+  ]
+}

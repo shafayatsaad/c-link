@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+data/
+config/local.ps1
+deploy/.env
+deploy/secrets/llamacpp_api_key
+*.sqlite
+*.sqlite3
+*.db
+backups/
+.pytest_cache/

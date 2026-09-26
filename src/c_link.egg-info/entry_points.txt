@@ -1,0 +1,2 @@
+[console_scripts]
+c-link = c_link.cli:app

@@ -1,0 +1,14 @@
+{
+  "usage": "Reference only; configure runtime settings through environment variables or config/local.ps1.",
+  "gateway_host": "127.0.0.1",
+  "gateway_port": 9931,
+  "openai_api_base": "http://127.0.0.1:9931/v1",
+  "data_dir": "data",
+  "database": "data/c_link.db",
+  "model_provider": "llama.cpp",
+  "model_endpoint": "http://127.0.0.1:9932",
+  "max_recent_messages": 12,
+  "max_recent_chars": 8000,
+  "api_key_env": "C_LINK_API_KEY",
+  "cors_origins_env": "C_LINK_CORS_ORIGINS"
+}

@@ -1,0 +1,24 @@
+{
+  "benchmark": "c-link-http-memory-v1",
+  "timestamp_utc": "2026-09-26T13:28:18.446012+00:00",
+  "base_url": "http://127.0.0.1:9940",
+  "session_id": "http-bench-3b7e8aa7-75ec-4db8-97c8-4ee1f249225d",
+  "message_count": 500,
+  "session_create_ms": 9.325,
+  "ingest_total_seconds": 6.698,
+  "ingest_messages_per_second": 74.65,
+  "write_p50_ms": 9.178,
+  "write_p95_ms": 31.679,
+  "query_repeats": 50,
+  "query_warmups_discarded": 5,
+  "query_p50_ms": 7.069,
+  "query_p95_ms": 29.672,
+  "target_recalled": true,
+  "evidence_count": 1,
+  "retrieval_methods": [
+    "fts5"
+  ],
+  "context_packet_chars": 1137,
+  "model_involved": false,
+  "benchmark_session_persists": true
+}
