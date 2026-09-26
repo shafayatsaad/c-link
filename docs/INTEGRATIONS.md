@@ -21,7 +21,7 @@ Invoke-RestMethod http://127.0.0.1:9940/health/provider
 Invoke-RestMethod http://127.0.0.1:9940/v1/models
 ```
 
-The current local setup uses model provider port `9931` and C-Link port `9940`. C-Link's `local` auth mode is intended for loopback use. To expose a local process on another interface, use an API key and a trusted network boundary; for internet-facing deployment, use the [deployment guide](DEPLOYMENT.md), which requires API-key auth behind TLS.
+The example uses model provider port `9931` and C-Link port `9940`. C-Link's default `local` auth mode is intended for loopback use on your own computer. Leave it bound to `127.0.0.1` for normal individual use.
 
 ## API endpoints
 
@@ -75,11 +75,11 @@ Invoke-RestMethod -Method Post -Uri "$base/v1/chat/completions" `
 
 In **Settings → Admin → Connections → OpenAI API**, add:
 
-- URL: `http://127.0.0.1:9940/v1` for local use, or your HTTPS deployment URL ending in `/v1`.
-- API key: blank in local mode; for a multi-user deployment, use that user's tenant key.
+- URL: `http://127.0.0.1:9940/v1`.
+- API key: blank in local mode.
 - Model: `local-model`.
 
-If Open WebUI runs in Docker, `host.docker.internal` can address the host on supported Docker setups, but the local C-Link command above binds only to loopback. To connect across that boundary, place both services on a private container network or use an authenticated TLS proxy configured as described in [Deployment](DEPLOYMENT.md); do not expose an unauthenticated loopback-mode service. Open WebUI's provider connection setup is documented in the [Open WebUI guide](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/).
+If Open WebUI runs in Docker, its container may not be able to reach a host service bound to loopback. For a simple local setup, run both apps on the same host outside separate containers. Open WebUI's provider connection setup is documented in the [Open WebUI guide](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/).
 
 For durable per-conversation memory, configure the Open WebUI connector or an intermediary to pass a stable `X-C-Link-Session-Id`. Do not place a privileged C-Link key in browser JavaScript.
 
@@ -102,11 +102,11 @@ models:
       - edit
 ```
 
-For a deployed instance, use its HTTPS API base, and inject the tenant key through the app's supported secret storage. Continue's OpenAI-compatible endpoint fields are described in its [configuration reference](https://docs.continue.dev/reference). C-Link does not implement embeddings or repository indexing; use separate providers for those capabilities.
+Continue's OpenAI-compatible endpoint fields are described in its [configuration reference](https://docs.continue.dev/reference). C-Link does not implement embeddings or repository indexing; use separate providers for those capabilities.
 
 ## Hermes Agent
 
-Run `hermes model`, choose **Custom endpoint**, and enter the C-Link API base URL, model name `local-model`, and the API key. For local loopback mode, use `http://127.0.0.1:9940/v1`; for a deployment, use the HTTPS URL and that tenant's key. Hermes documents this setup in its [custom endpoint guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/providers.md#general-setup) and [model configuration guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuring-models.md).
+Run `hermes model`, choose **Custom endpoint**, and enter the C-Link API base URL `http://127.0.0.1:9940/v1`, model name `local-model`, and the API key if your local C-Link configuration requires one. Hermes documents this setup in its [custom endpoint guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/providers.md#general-setup) and [model configuration guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuring-models.md).
 
 Hermes also supports a `session_affinity_header` option for named providers. Configure that option as `X-C-Link-Session-Id` only if your Hermes setup uses a named provider and should send stable conversation IDs to C-Link.
 
@@ -117,7 +117,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="http://127.0.0.1:9940/v1",
-    api_key="local-only",  # For a deployed instance, load that tenant's key from a secret store.
+    api_key="local-only",  # Local mode does not validate an API key.
 )
 answer = client.chat.completions.create(
     model="local-model",
@@ -133,11 +133,9 @@ for chunk in answer:
 
 C-Link implements the Chat Completions route, model listing, JSON replies, and SSE streaming. It is not an OpenAI Responses API, Anthropic Messages API, or embeddings endpoint. Tool calls may pass through as model output, but C-Link does not execute tools. Apps requiring those APIs need a compatible provider or adapter.
 
-## Multi-user authentication and network access
+## Optional shared use on a trusted local network
 
-The included internet-facing setup requires `C_LINK_ENV=production`, `C_LINK_AUTH_MODE=api_key`, and `C_LINK_BEHIND_TLS_PROXY=true`. Every `/v1/*` request requires `Authorization: Bearer <key>`. The operator creates tenants and keys with the host CLI; C-Link does not expose public signup or tenant administration endpoints. Different tenants have separate sessions, archives, context, and snapshots. Multiple keys issued to one tenant share that tenant's data.
-
-Keep C-Link on `127.0.0.1` for a single local user. Production traffic should go through a TLS-terminating reverse proxy. Browser clients need exact trusted CORS origins in `C_LINK_CORS_ORIGINS`; wildcard CORS is rejected. Server-to-server apps generally do not require CORS.
+The default install is for one person on one computer and listens on `127.0.0.1`. An administrator can optionally enable API-key authentication and create local tenants with the `c-link tenant` CLI for several trusted users sharing a machine or private network. Each tenant has its own sessions and archive. C-Link has no public registration or account service. Keep shared use on a trusted private network and configure authentication before allowing other devices to connect.
 
 ## Backup and restore
 
@@ -148,4 +146,4 @@ For a local PowerShell install, stop C-Link before restore:
 & .\.venv\Scripts\c-link.exe restore .\backups\c-link.sqlite3
 ```
 
-The restore command validates the backup, atomically replaces the configured database, and saves the previous database as a `.pre-restore-<timestamp>` copy when possible. For Docker operations and off-host backup guidance, see [Deployment](DEPLOYMENT.md).
+The restore command validates the backup, atomically replaces the configured database, and saves the previous database as a `.pre-restore-<timestamp>` copy when possible.
