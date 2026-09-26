@@ -187,12 +187,11 @@ c-link/
 ├── README.ja.md              # 日本語
 ├── LICENSE                   # MIT
 ├── assets/                   # README banner, architecture, and local proof images
-└── ./
-    ├── pyproject.toml        # Installable Python package
-    ├── src/c_link/           # API, context, storage, provider, CLI
-    ├── tests/                # Regression tests
-    ├── docs/INTEGRATIONS.md  # Client setup and API details
-    └── scripts/start.ps1     # Windows local start helper
+├── pyproject.toml            # Installable Python package
+├── src/c_link/               # API, context, storage, provider, CLI
+├── tests/                    # Regression tests
+├── docs/INTEGRATIONS.md      # Client setup and API details
+└── scripts/start.ps1         # Windows local start helper
 ```
 
 Local data, model files, private planning context, generated reports, and benchmark harnesses are not part of the GitHub source tree.
