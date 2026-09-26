@@ -10,7 +10,7 @@
 		-Server
 	}
 	@api path /v1/*
-	@health path /health
+	@health path /health /health/provider
 	handle @api {
 		reverse_proxy c-link:8000
 	}
