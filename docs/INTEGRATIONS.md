@@ -79,7 +79,7 @@ In **Settings → Admin → Connections → OpenAI API**, add:
 - API key: blank in local mode; for a multi-user deployment, use that user's tenant key.
 - Model: `local-model`.
 
-If Open WebUI runs in Docker, the host address is commonly `http://host.docker.internal:9940/v1`. The C-Link process must be reachable from the container. Prefer a private container network; do not disable authentication or expose an unauthenticated server to an untrusted network. Open WebUI's provider connection setup is documented in the [Open WebUI guide](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/).
+If Open WebUI runs in Docker, `host.docker.internal` can address the host on supported Docker setups, but the local C-Link command above binds only to loopback. To connect across that boundary, place both services on a private container network or use an authenticated TLS proxy configured as described in [Deployment](DEPLOYMENT.md); do not expose an unauthenticated loopback-mode service. Open WebUI's provider connection setup is documented in the [Open WebUI guide](https://docs.openwebui.com/getting-started/quick-start/connect-a-provider/starting-with-openai-compatible/).
 
 For durable per-conversation memory, configure the Open WebUI connector or an intermediary to pass a stable `X-C-Link-Session-Id`. Do not place a privileged C-Link key in browser JavaScript.
 
@@ -106,21 +106,9 @@ For a deployed instance, use its HTTPS API base, and inject the tenant key throu
 
 ## Hermes Agent
 
-Configure an OpenAI-compatible custom provider in Hermes:
+Run `hermes model`, choose **Custom endpoint**, and enter the C-Link API base URL, model name `local-model`, and the API key. For local loopback mode, use `http://127.0.0.1:9940/v1`; for a deployment, use the HTTPS URL and that tenant's key. Hermes documents this setup in its [custom endpoint guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/providers.md#general-setup) and [model configuration guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuring-models.md).
 
-```yaml
-providers:
-  c-link:
-    api: http://127.0.0.1:9940/v1
-    transport: chat_completions
-    key_env: C_LINK_API_KEY
-    session_affinity_header: X-C-Link-Session-Id
-    models:
-      local-model:
-        context_length: 8192
-```
-
-For local mode, omit `key_env`. In a multi-user deployment, set `C_LINK_API_KEY` to the key issued for that tenant using Hermes' secret mechanism. Hermes documents custom providers in its [provider guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/providers.md) and [model configuration guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuring-models.md).
+Hermes also supports a `session_affinity_header` option for named providers. Configure that option as `X-C-Link-Session-Id` only if your Hermes setup uses a named provider and should send stable conversation IDs to C-Link.
 
 ## OpenAI SDK and compatible clients
 
